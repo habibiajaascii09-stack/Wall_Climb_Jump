@@ -1,0 +1,39 @@
+{
+  "format_version": "1.18.20",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "minecraft:player",
+      "is_spawnable": false,
+      "is_summonable": false,
+      "is_experimental": false
+    },
+    "component_groups": {
+      "power:climb_on": {
+        "minecraft:can_climb": {}
+      }
+    },
+    "components": {
+      "minecraft:type_family": { "family": [ "player" ] },
+      "minecraft:environment_sensor": {
+        "triggers": [
+          {
+            "filters": { "test": "has_tag", "value": "climb_enabled" },
+            "event": "event:enable_climb"
+          },
+          {
+            "filters": { "test": "has_tag", "value": "climb_enabled", "operator": "!=" },
+            "event": "event:disable_climb"
+          }
+        ]
+      }
+    },
+    "events": {
+      "event:enable_climb": {
+        "add": { "component_groups": [ "power:climb_on" ] }
+      },
+      "event:disable_climb": {
+        "remove": { "component_groups": [ "power:climb_on" ] }
+      }
+    }
+  }
+}
